@@ -18,7 +18,7 @@ load: blink.elf
 	msp430loader.sh blink.elf
 
 clean:
-	rm -f *.o *.elf
+	rm -f *.o *.elf *~ *#
 
 led.o: led.c led.h
 
