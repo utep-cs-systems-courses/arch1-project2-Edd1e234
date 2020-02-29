@@ -3,4 +3,6 @@
 
 void state_advance();
 
+void state_advance_binary();
+
 #endif // included
