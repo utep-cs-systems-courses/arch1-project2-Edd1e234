@@ -18,5 +18,5 @@ load: button.elf
 	msp430loader.sh button.elf
 
 clean:
-	rm -f *.o *.elf
+	rm -f *.o *.elf *~ *#
 
