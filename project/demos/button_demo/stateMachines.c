@@ -2,9 +2,9 @@
 #include "stateMachines.h"
 #include "led.h"
 
-char toggle() {
-  static char state = 0;
+char state = 0; 
 
+char toggle() {
   switch(state) {
   case 0:
     red_led_state = 0;
@@ -32,5 +32,5 @@ char toggle() {
 void state_advance()
 {
   leds_changed = toggle();
-  led_update();
+  led_update_switch();
 }
