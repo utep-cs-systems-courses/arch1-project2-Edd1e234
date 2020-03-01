@@ -2,6 +2,11 @@
 #include "led.h"
 #include "switches.h"
 
+unsigned char red_on = 0, green_on = 0;
+unsigned char led_changed = 0;
+
+static char redVal[] = {0, LED_RED}, greenVal[] = {0, LED_GREEN};
+
 void led_init()
 {
   P1DIR |= LEDS;		// bits attached to leds are output
@@ -22,19 +27,26 @@ void led_update(){
   switch_state_changed = 0;
 }
 
-void led_update_switch() {
+char toggle()
+{
   static char state = 0; 
   if (switch_state_changed) {
-    char ledFlags = 0;
-
-    if (state) {
-      ledFlags |= switch_state_down ? 0: LED_GREEN;
-      state = 0; 
-    } else {
-      ledFlags |= switch_state_down ? 0: LED_RED;
+    switch (state) {
+    case 0:
       state = 1; 
+      return LED_GREEN;
+    case 1:
+      state = 0;
+      return LED_RED;
     }
-      
+  }
+}    
+
+void led_update_switch() {
+
+  if (switch_state_changed) {
+    char ledFlags = redVal[red_on] | greenVal[green_on];
+
     P1OUT &= (0xff - LEDS) | ledFlags;
     P1OUT |= ledFlags;
   }
