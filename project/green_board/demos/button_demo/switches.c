@@ -31,7 +31,7 @@ switch_interrupt_handler()
 {
   char p1val = switch_update_interrupt_sense();
   //  switch_state_down = (p1val & SW1) ? 0 : 1; /* 0 when SW1 is up */
-  switch_state_down_button_1 = (p1val & SW2) ? 0 : 1;
+  switch_state_down_button_1 = (p1val & SW1) ? 0 : 1;
   switch_state_changed = 1;
-  state = 0;
+  state = 0; // This reset the state machine. 
 }
