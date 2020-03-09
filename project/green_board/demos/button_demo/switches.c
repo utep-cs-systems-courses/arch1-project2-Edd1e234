@@ -3,7 +3,7 @@
 #include "led.h"
 #include "stateMachines.h"
 
-char switch_state_down_button_1, switch_state_changed; /* effectively boolean */
+char switch_state_down_button_1, switch_state_down_button_2, switch_state_changed; /* effectively boolean */
 
 static char 
 switch_update_interrupt_sense()
@@ -31,7 +31,18 @@ switch_interrupt_handler()
 {
   char p1val = switch_update_interrupt_sense();
   //  switch_state_down = (p1val & SW1) ? 0 : 1; /* 0 when SW1 is up */
-  switch_state_down_button_1 = (p1val & SW1) ? 0 : 1;
+  //  switch_state_down_button_1 = (p1val & SW1) ? 0 : 1;
+
+  switch_state_down_button_1 = 0;
+  switch_state_down_button_2 = 0; 
+
+  if (p1val & SW1) {
+    switch_state_down_button_1 = 1;
+    state_button_1 = 0; // This is to reset the binary state machine.
+    state = 0; 
+  } else if (p1val & SW2) {
+    switch_state_down_button_2 = 1;
+    state = 1; 
+  }
   switch_state_changed = 1;
-  state = 0; // This reset the state machine. 
 }

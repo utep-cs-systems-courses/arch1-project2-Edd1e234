@@ -14,6 +14,7 @@ void led_init()
   led_update_switch();
 }
 
+// Depricated. Only for references. 
 void led_update(){
   if (switch_state_changed) {
     char ledFlags = 0; /* by default, no LEDs on */
@@ -27,6 +28,8 @@ void led_update(){
   switch_state_changed = 0;
 }    
 
+
+// This will set the lights. 
 void led_update_switch() {
 
     char ledFlags = redVal[red_led_state] | greenVal[green_led_state];
