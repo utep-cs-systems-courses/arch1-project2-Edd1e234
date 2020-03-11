@@ -1,6 +1,7 @@
 #include <msp430.h>
 #include "stateMachines.h"
 #include "led.h"
+#include "switches.h"
 
 char state = 1; 
 char state_button_1 = 0;  // This will only be changed by the switch interrupt handler.
@@ -33,15 +34,15 @@ char toggle_button_1() {
 }
 
 char toggle_button_2() {
-  if (state_button_2) {
-    green_led_state = 1;
-    red_led_state = 0;
-    state_button_2 = 0; 
-  } else {
-    red_led_state = 1;
-    green_led_state = 0;
-    state_button_2 = 1;
-  }
+    if (state_button_2) {
+      green_led_state = 1;
+      red_led_state = 0;
+      state_button_2 = 0; 
+    } else {
+      red_led_state = 1;
+      green_led_state = 0;
+      state_button_2 = 1;
+    }
   return 1; 
 }
 
@@ -53,7 +54,10 @@ void state_advance()
     break;
   case 1:
     leds_changed = toggle_button_2();
-    break; 
+    break;
+  case 2:
+    leds_changed = toggle_button_2();
+    break;
   }
   //led_update_switch();
   //leds_changed = toggle_button_1();

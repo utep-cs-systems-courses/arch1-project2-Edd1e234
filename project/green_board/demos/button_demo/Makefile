@@ -24,4 +24,4 @@ wdInterruptHandler.o: stateMachines.h
 
 led.o: led.c led.h
 
-stateMachines.o: led.h stateMachines.h
+stateMachines.o: led.h stateMachines.h switches.h

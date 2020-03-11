@@ -3,7 +3,7 @@
 #include "led.h"
 #include "stateMachines.h"
 
-char switch_state_down_button_1, switch_state_down_button_2, switch_state_changed; /* effectively boolean */
+char switch_state_down_button_1, switch_state_down_button_2, switch_state_down_button_3, switch_state_changed; /* effectively boolean */
 
 static char 
 switch_update_interrupt_sense()
@@ -17,12 +17,13 @@ switch_update_interrupt_sense()
 
 void 
 switch_init()			/* setup switch */
-{  
+{
   P2REN |= SWITCHES;		/* enables resistors for switches */
   P2IE |= SWITCHES;		/* enable interrupts from switches */
   P2OUT |= SWITCHES;		/* pull-ups for switches */
   P2DIR &= ~SWITCHES;		/* set switches' bits for input */
   switch_update_interrupt_sense();
+  state = 0; 
   led_update_switch();
 }
 
@@ -33,16 +34,22 @@ switch_interrupt_handler()
   //  switch_state_down = (p1val & SW1) ? 0 : 1; /* 0 when SW1 is up */
   //  switch_state_down_button_1 = (p1val & SW1) ? 0 : 1;
 
-  switch_state_down_button_1 = 0;
-  switch_state_down_button_2 = 0; 
+  switch_state_down_button_1 = (p1val & SW1) ? 0: 1;
+  switch_state_down_button_2 = (p1val & SW2) ? 0: 1;
+  switch_state_down_button_3 = (p1val & SW3) ? 0: 1; 
 
-  if (p1val & SW1) {
-    switch_state_down_button_1 = 1;
-    state_button_1 = 0; // This is to reset the binary state machine.
-    state = 0; 
-  } else if (p1val & SW2) {
-    switch_state_down_button_2 = 1;
+  // switch_state_down_button_1 = 0;
+  //  switch_state_down_button_2 = 0;
+  
+  if (switch_state_down_button_1) {
+    state_button_1 = 0; // This is to reset the binary state machine.  
+    state = 0; // Setting to the first state. 
+  }
+  if (switch_state_down_button_2) {
     state = 1; 
+  }
+  if (switch_state_down_button_3) {
+    state = 2;
   }
   switch_state_changed = 1;
 }
