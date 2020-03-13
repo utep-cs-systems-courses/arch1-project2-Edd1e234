@@ -3,9 +3,10 @@
 #include "led.h"
 #include "switches.h"
 
-char state = 1; 
+char state = 0; 
 char state_button_1 = 0;  // This will only be changed by the switch interrupt handler.
-char state_button_2 = 0; 
+char state_button_2 = 0;
+char state_button_3 = 0; 
 
 /* Binary State machine, only for button one and is the starting case.*/
 char toggle_button_1() {
@@ -46,6 +47,22 @@ char toggle_button_2() {
   return 1; 
 }
 
+char toggle_button_3() {
+  switch (state_button_3) {
+  case 0:
+    green_led_state = 1;
+    red_led_state = 1;
+    state_button_3 = 1; 
+    break;
+  case 1:
+    green_led_state = 0;
+    red_led_state = 0;
+    state_button_3 = 0; 
+    break;
+  }
+  return 1;
+}
+
 void state_advance()
 {
   switch (state) {
@@ -56,7 +73,7 @@ void state_advance()
     leds_changed = toggle_button_2();
     break;
   case 2:
-    leds_changed = toggle_button_2();
+    leds_changed = toggle_button_3();
     break;
   }
   //led_update_switch();
