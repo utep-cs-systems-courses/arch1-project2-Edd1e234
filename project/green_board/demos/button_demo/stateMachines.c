@@ -50,15 +50,34 @@ char toggle_button_2() {
 char toggle_button_3() {
   switch (state_button_3) {
   case 0:
-    green_led_state = 1;
-    red_led_state = 1;
+    green_led_state = 0;
+    red_led_state = 0;
     state_button_3 = 1; 
     break;
   case 1:
     green_led_state = 0;
     red_led_state = 0;
-    state_button_3 = 0; 
+    state_button_3 = 2; 
     break;
+  case 2:
+    green_led_state = 0;
+    red_led_state = 0;
+    state_button_3 = 3;
+    break;
+  case 3:
+    green_led_state = 0;
+    red_led_state = 0;
+    state_button_3 = 4;
+    break;
+  case 4:
+    green_led_state = 0;
+    red_led_state = 0;
+    state_button_3 = 5;
+    break;
+  case 5:
+    green_led_state = 1;
+    red_led_state = 1;
+    state_button_3 = 0;
   }
   return 1;
 }
@@ -78,7 +97,5 @@ void state_advance()
   case 3:
     leds_changed = toggle_button_2();
   }
-  //led_update_switch();
-  //leds_changed = toggle_button_1();
   led_update_switch();
 }
