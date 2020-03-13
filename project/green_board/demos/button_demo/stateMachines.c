@@ -75,6 +75,8 @@ void state_advance()
   case 2:
     leds_changed = toggle_button_3();
     break;
+  case 3:
+    leds_changed = toggle_button_2();
   }
   //led_update_switch();
   //leds_changed = toggle_button_1();
