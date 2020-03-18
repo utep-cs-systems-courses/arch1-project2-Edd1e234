@@ -9,8 +9,13 @@ __interrupt_vec(WDT_VECTOR) WDT() {
       state_advance();
       blink_count = 0;
     }
+  } else if (state==3) {
+    if (++blink_count==time_set[value]) {
+      state_advance();
+      blink_count = 0;
+    }
   } else {
-    if (++blink_count==125) {
+    if (++blink_count==185) {
       state_advance();
       blink_count = 0;
     }
