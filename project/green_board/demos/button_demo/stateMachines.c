@@ -10,9 +10,8 @@ char state_button_2 = 0;
 char state_button_3 = 0;
 char state_button_4 = 0;
 
-static char FINAL = 95;
-static int HALF_NOTE = 188;
-static int eighth_note = 35;
+static char start = 125;
+static char FINAL = 137;
 
 /*First part ends at 16.*/
 const int periods[] = {758, 758, 758, 1517, 803, 803, 1607, 902, 902, 902, 1804, 1136, 1136, 758,
@@ -46,7 +45,7 @@ const int periods[] = {758, 758, 758, 1517, 803, 803, 1607, 902, 902, 902, 1804,
 		 6068, 7216, 6068, 4816, // 90
 		 6068, 7216, 6068, 4816, // Set 31
 		 6068, 7216, 6068, 4816, // 94
-		 804										 // 95, Final for now.
+		       804, 0, 5000										 // 95, Final for now.
 
 };
 // First set is 14.
@@ -81,6 +80,7 @@ const int time_set[] = {188, 188, 188, 188, 188, 188, 188, 188, 188, 188, 188, 1
 			43, 43, 43, 43,
 			43, 43, 43, 43, // Set 31
 			43, 43, 43, 43,
+			94, 43,         // End of 32 and 33
 			188							// Final for now.
 
 };
@@ -115,8 +115,8 @@ const int periods_inv[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 					12130, 0, 0, 0, // Set 30
 					1136, 0, 0, 0,
 					12130, 0, 0, 0, // Set 31
-					1204, 0, 0, 0,
-					0 							// Final: Set 32
+					1204, 0, 0, 804,
+			   0, 0, 0  // Final: Set 32
 };
 int value = 5;
 
@@ -229,17 +229,17 @@ void state_advance()
 {
   switch (state) {
   case 0:
-    value = 0;
+    value = start;
     buzzer_set_period(0);
     leds_changed = toggle_button_1();
     break;
   case 1:
-    value = 0;
+    value = start;
     buzzer_set_period(0);
     leds_changed = toggle_button_2();
     break;
   case 2:
-    value = 0;
+    value = start;
     buzzer_set_period(0);
     leds_changed = toggle_button_3();
     break;
