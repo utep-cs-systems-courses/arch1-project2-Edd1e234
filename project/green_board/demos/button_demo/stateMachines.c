@@ -10,9 +10,71 @@ char state_button_2 = 0;
 char state_button_3 = 0;
 char state_button_4 = 0;
 
-int periods[] = {804, 804, 804};
-int time_set[] = {188, 188, 188};
-int value = 0; 
+static char FINAL = 66;
+static int HALF_NOTE = 188;
+static int eighth_note = 35;
+
+/*First part ends at 16.*/
+int periods[] = {758, 758, 758, 1517, 803, 803, 1607, 902, 902, 902, 1804, 1136, 1136, 758,
+		 4816, 4900, 4816, 4050, // Set 17
+		 4816, 4900, 4816, 4050,
+		 4816, 4900, 4816, 4050, // Set 18
+		 4816, 4900, 4816, 4050, // This is also 30.
+		 4816, 4900, 4816, 4050, // Set 19
+		 4816, 4900, 4816, 4050,
+		 4816, 4900, 4816, 4050, // Set 20
+		 4816, 4900, 4816, 4050, // 46
+		 4816, 4900, 4816, 4050, // Set 21
+		 4816, 4900, 4816, 4050, // 54
+		 4816, 4900, 4816, 4050, // Set 22
+		 4816, 4900, 4816, 4050, // 58
+		 4816, 4900, 4816, 4050, // Set 23
+		 4816, 4900, 4816, 4050, // 62
+		 4816, 4900, 4816, 4050, // Set 24
+		 4816, 4900, 4816, 4050  // 66
+		 
+};
+// First set is 14.
+int time_set[] = {188, 188, 188, 188, 188, 188, 188, 188, 188, 188, 188, 188, 188, 188,
+		  43, 43, 43, 43, // Set 17
+		  43, 43, 43, 43, 
+		  43, 43, 43, 43, // Set 18
+		  43, 43, 43, 43,
+		  43, 43, 43, 43, // Set 19
+		  43, 43, 43, 43,
+		  43, 43, 43, 43, // Set 20
+		  43, 43, 43, 43,
+		  43, 43, 43, 43, // Set 21
+		  43, 43, 43, 43,
+		  43, 43, 43, 43, // Set 22
+		  43, 43, 43, 43,
+		  43, 43, 43, 43, // Set 23
+		  43, 43, 43, 43,
+		  43, 43, 43, 43, // Set 24
+		  43, 43, 43, 43
+};
+
+static int periods_inv[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			    5000, 0, 0, 0, // Set 17
+			    758, 0, 0, 0, 
+			    5000, 0, 0, 0, // Set 18
+			    758, 0, 0, 0,
+			    5000, 0, 0, 0, // Set 19
+			    758, 0, 0, 0,
+			    5000, 0, 0, 0, // Set 20
+			    1517, 0, 0, 0,
+};
+int value = 5;
+
+void turn_on() {
+  red_led_state = 1;
+  green_led_state = 1;
+}
+
+void turn_off() {
+  red_led_state = 0;
+  green_led_state = 0;
+}
 
 /* Binary State machine, only for button one and is the starting case.*/
 char toggle_button_1() {
@@ -89,18 +151,20 @@ char toggle_button_3() {
 }
 
 char toggle_button_4() {
-  if (value==3) {
+  if (value==FINAL) {
     buzzer_set_period(0);
   }else {
     switch(state_button_4) {
     case 0:
       buzzer_set_period(periods[value]);
       state_button_4 = 1;
+      turn_off(); 
       break;
     case 1:
-      buzzer_set_period(0);
+      buzzer_set_period(periods_inv[value]);
       value++;
-      state_button_4 = 0; 
+      state_button_4 = 0;
+      turn_on();
       break;
     }
   }
