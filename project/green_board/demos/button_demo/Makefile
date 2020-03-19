@@ -1,5 +1,5 @@
 # makfile configuration
-COMMON_OBJECTS  = 
+COMMON_OBJECTS  =
 CPU             = msp430g2553
 CFLAGS          = -mmcu=${CPU} -I../h
 LDFLAGS		= -L/opt/ti/msp430_gcc/include
@@ -24,6 +24,6 @@ wdInterruptHandler.o: stateMachines.h
 
 led.o: led.c led.h
 
-stateMachines.o: led.h stateMachines.h switches.h
+stateMachines.o: led.h stateMachines.h switches.h stateMachinesUtil.h
 
 buzzer.c: buzzer.h
