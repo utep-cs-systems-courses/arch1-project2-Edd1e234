@@ -1,5 +1,6 @@
 #include <msp430.h>
 #include "stateMachines.h"
+#include "stateMachinesUtil.h"
 #include "led.h"
 #include "switches.h"
 #include "buzzer.h"
@@ -161,16 +162,6 @@ const int periods_inv[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 					6068, 7216, 6068, 4816
 };
 int value = 5;
-
-void turn_on() {
-  red_led_state = 1;
-  green_led_state = 1;
-}
-
-void turn_off() {
-  red_led_state = 0;
-  green_led_state = 0;
-}
 
 /* Binary State machine, only for button one and is the starting case.*/
 char toggle_button_1() {
