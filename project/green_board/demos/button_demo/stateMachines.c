@@ -11,7 +11,7 @@ char state_button_3 = 0;
 char state_button_4 = 0;
 
 static char start = 130;
-static char FINAL = 171;
+static char FINAL = 179;
 
 /*First part ends at 16.*/
 const int periods[] = {758, 758, 758, 1517, 803, 803, 1607, 902, 902, 902, 1804, 1136, 1136, 758,
@@ -99,7 +99,7 @@ const int time_set[] = {188, 188, 188, 188, 188, 188, 188, 188, 188, 188, 188, 1
 			43, 43, 43, 43, // 37
 			43, 43, 43, 43,
 			43, 43, 43, 43, // 38
-			43, 43, 43, 43
+			43, 43, 43, 43,
 			43, 43, 43, 43, // 39
 			43, 43, 43, 43
 };
