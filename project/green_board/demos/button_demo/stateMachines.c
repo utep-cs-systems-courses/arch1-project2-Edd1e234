@@ -10,7 +10,7 @@ char state_button_2 = 0;
 char state_button_3 = 0;
 char state_button_4 = 0;
 
-static char start = 130;
+static char start = 0;
 static char FINAL = 195;
 
 /*First part ends at 16.*/
