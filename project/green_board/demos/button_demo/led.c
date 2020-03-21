@@ -36,5 +36,5 @@ void led_update_switch() {
 
     P1OUT &= (0xff - LEDS) | ledFlags;
     P1OUT |= ledFlags;
-  switch_state_changed = 0; 
+    switch_state_changed = 0; 
 }
