@@ -11,9 +11,8 @@ char state_button_2 = 0;
 char state_button_3 = 0;
 char state_button_4 = 0;
 
-static char start = 0;
-static char FINAL = 195;
-
+char value = 0;
+const char FINAL = 195; 
 /*First part ends at 16.*/
 const int periods[] = {758, 758, 758, 1517, 803, 803, 1607, 902, 902, 902, 1804, 1136, 1136, 758,
 		 4816, 6428, 4816, 4050, // Set 17
@@ -161,7 +160,6 @@ const int periods_inv[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 					14290, 14290, 6068, 4816, // 41 Final....
 					6068, 7216, 6068, 4816
 };
-int value = 5;
 
 /* Binary State machine, only for button one and is the starting case.*/
 char toggle_button_1() {
@@ -262,17 +260,17 @@ void state_advance()
 {
   switch (state) {
   case 0:
-    value = start;
+    value = 0;
     buzzer_set_period(0);
     leds_changed = toggle_button_1();
     break;
   case 1:
-    value = start;
+    value = 0;
     buzzer_set_period(0);
     leds_changed = toggle_button_2();
     break;
   case 2:
-    value = start;
+    value = 0;
     buzzer_set_period(0);
     leds_changed = toggle_button_3();
     break;
