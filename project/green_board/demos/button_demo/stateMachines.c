@@ -12,6 +12,9 @@ char state_button_3 = 0;
 char state_button_4 = 0;
 char value = 0;
 
+// Should only be changed in stateMachines.c, used in wdInterruptHandler.c 
+char blink_count_end = 185;
+
 const char FINAL = 195; 
 const int periods[] = {758, 758, 758, 1517, 803, 803, 1607, 902, 902, 902, 1804, 1136, 1136, 758,
 		 4816, 6428, 4816, 4050, // Set 17
@@ -236,19 +239,23 @@ void state_advance()
     value = 0;
     buzzer_set_period(0);
     toggle_button_1();
+    blink_count_end = 185;
     break;
   case 1:
     value = 0;
     buzzer_set_period(0);
     toggle_button_2();
+    blink_count_end = 185;
     break;
   case 2:
     value = 0;
     buzzer_set_period(0);
     toggle_button_3();
+    blink_count_end = 1;
     break;
   case 3:
     toggle_button_4();
+    blink_count_end = time_set[value];
   }
   leds_changed = 1;
   led_update_switch();
