@@ -61,9 +61,3 @@ toggle_button_1:
 	mov.b #1, state_button_1
 	JMP end
 	ret
-
-
-
-
-
-	

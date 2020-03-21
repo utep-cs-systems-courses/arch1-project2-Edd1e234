@@ -1,6 +1,6 @@
 #include <msp430.h>
-#include "switches.h"
 #include "led.h"
+#include "switches.h"
 #include "stateMachines.h"
 
 char switch_state_down_button_1, switch_state_down_button_2, switch_state_down_button_3;
@@ -32,20 +32,15 @@ void
 switch_interrupt_handler()
 {
   char p1val = switch_update_interrupt_sense();
-  //  switch_state_down = (p1val & SW1) ? 0 : 1; /* 0 when SW1 is up */
-  //  switch_state_down_button_1 = (p1val & SW1) ? 0 : 1;
-
+  
   switch_state_down_button_1 = (p1val & SW1) ? 0: 1;
   switch_state_down_button_2 = (p1val & SW2) ? 0: 1;
   switch_state_down_button_3 = (p1val & SW3) ? 0: 1;
-  switch_state_down_button_4 = (p1val & SW4) ? 0: 1; 
+  switch_state_down_button_4 = (p1val & SW4) ? 0: 1;
 
-  // switch_state_down_button_1 = 0;
-  //  switch_state_down_button_2 = 0;
-  
   if (switch_state_down_button_1) {
-     state_button_1 = 0; // This is to reset the binary state machine.
-     state = 0; // Setting to the first state. 
+    state_button_1 = 0;           /* This is to reset the binary state machine.*/
+    state = 0;                    /* Setting to the first state.*/ 
   }
   if (switch_state_down_button_2) {
     state = 1; 
