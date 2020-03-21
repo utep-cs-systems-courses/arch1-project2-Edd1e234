@@ -10,10 +10,9 @@ char state_button_1 = 0;  // This will only be changed by the switch interrupt h
 char state_button_2 = 0;
 char state_button_3 = 0;
 char state_button_4 = 0;
-
 char value = 0;
+
 const char FINAL = 195; 
-/*First part ends at 16.*/
 const int periods[] = {758, 758, 758, 1517, 803, 803, 1607, 902, 902, 902, 1804, 1136, 1136, 758,
 		 4816, 6428, 4816, 4050, // Set 17
 		 4816, 6428, 4816, 4050,
@@ -161,32 +160,6 @@ const int periods_inv[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 					6068, 7216, 6068, 4816
 };
 
-/* Binary State machine, only for button one and is the starting case.*/
-char toggle_button_1() {
-  switch(state_button_1) {
-  case 0:
-    red_led_state = 0;
-    green_led_state = 0;
-    state_button_1 = 1;
-    break;
-  case 1:
-    red_led_state = 1;
-    state_button_1 = 2;
-    break;
-  case 2:
-    red_led_state = 0;
-    green_led_state = 1;
-    state_button_1 = 3;
-    break;
-  case 3:
-    red_led_state = 1;
-    green_led_state = 1;
-    state_button_1 = 0;
-    break;
-  }
-  return 1;
-}
-
 char toggle_button_2() {
     if (state_button_2) {
       green_led_state = 1;
@@ -262,20 +235,21 @@ void state_advance()
   case 0:
     value = 0;
     buzzer_set_period(0);
-    leds_changed = toggle_button_1();
+    toggle_button_1();
     break;
   case 1:
     value = 0;
     buzzer_set_period(0);
-    leds_changed = toggle_button_2();
+    toggle_button_2();
     break;
   case 2:
     value = 0;
     buzzer_set_period(0);
-    leds_changed = toggle_button_3();
+    toggle_button_3();
     break;
   case 3:
-    leds_changed = toggle_button_4();
+    toggle_button_4();
   }
+  leds_changed = 1;
   led_update_switch();
 }
