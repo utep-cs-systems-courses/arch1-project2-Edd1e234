@@ -232,26 +232,26 @@ char toggle_button_4() {
   return 1;
 }
 
+void set_values(char v, char buzzer, char blink) {
+  value = v;
+  buzzer_set_period(0);
+  blink_count_end = blink; 
+}
+
 void state_advance()
 {
   switch (state) {
   case 0:
-    value = 0;
-    buzzer_set_period(0);
+    set_values(0, 0, 185);
     toggle_button_1();
-    blink_count_end = 185;
     break;
   case 1:
-    value = 0;
-    buzzer_set_period(0);
+    set_values(0, 0, 185); 
     toggle_button_2();
-    blink_count_end = 185;
     break;
   case 2:
-    value = 0;
-    buzzer_set_period(0);
+    set_values(0, 0, 1);
     toggle_button_3();
-    blink_count_end = 1;
     break;
   case 3:
     toggle_button_4();
