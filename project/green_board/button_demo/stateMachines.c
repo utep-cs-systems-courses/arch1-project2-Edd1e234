@@ -165,22 +165,21 @@ const int periods_inv[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			   6068, 7216, 6068, 4816
 };
 
-/* Toggles from green to red. Does it based on time.*/
-char toggle_button_2() {
-    if (state_button_2) {
-      green_led_state = 1;
-      red_led_state = 0;
-      state_button_2 = 0;
-    } else {
-      red_led_state = 1;
-      green_led_state = 0;
-      state_button_2 = 1;
-    }
-  return 1;
+/* Goes from green to red.*/
+void toggle_button_2() {
+  if (state_button_2) {
+    green_led_state = 1;
+    red_led_state = 0;
+    state_button_2 = 0;
+  } else {
+    red_led_state = 1;
+    green_led_state = 0;
+    state_button_2 = 1;
+  }
 }
 
 /* Dims LEDs, turns on both led every 4 'blink_counts'.*/
-char toggle_button_3() {
+void toggle_button_3() {
   switch (state_button_3) {
   case 0:
     green_led_state = 0;
@@ -212,12 +211,11 @@ char toggle_button_3() {
     red_led_state = 1;
     state_button_3 = 0;
   }
-  return 1;
 }
 
 /* This function contains the state machine that transitions the 
    song from note to note.On down beats lights will turn on.*/
-char toggle_button_4() {
+void toggle_button_4() {
   if (value==FINAL) {
     value = 0;
   }
@@ -234,7 +232,6 @@ char toggle_button_4() {
     turn_on();
     break;
     }
-  return 1;
 }
 
 /* Just sets values based on current state.*/

@@ -22,10 +22,9 @@ turn_off:
 ;;; 	state machine from 0 to 3.
 	
 end:
-	mov.b #1, r12
 	ret
 	
-state_three:
+state_three_button_1:
 	cmp.b #3, &state_button_1
 	JNE toggle_button_1
 	mov.b #1, &red_led_state
@@ -34,18 +33,18 @@ state_three:
 	JMP end
 	ret
 	
-state_two:
+state_two_button_1:
 	cmp.b #2, &state_button_1
-	JNE state_three
+	JNE state_three_button_1
 	mov.b #0, &red_led_state
 	mov.b #1, &green_led_state
 	mov.b #3, &state_button_1
 	JMP end
 	ret
 	
-state_one:
+state_one_button_1:
 	cmp.b #1, &state_button_1
-	JNE state_two
+	JNE state_two_button_1
 	mov.b #1, &red_led_state
 	mov.b #2, &state_button_1
 	JMP end
@@ -55,9 +54,10 @@ state_one:
 	.global toggle_button_1
 toggle_button_1:
 	cmp.b #0, &state_button_1
-	JNE state_one
+	JNE state_one_button_1
 	mov.b #0, &red_led_state
 	mov.b #0, &green_led_state
 	mov.b #1, state_button_1
 	JMP end
 	ret
+
