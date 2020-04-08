@@ -2,6 +2,7 @@
 #include "led.h"
 #include "switches.h"
 #include "stateMachines.h"
+#include "stateMachinesUtil.h"
 
 char switch_state_down_button_1, switch_state_down_button_2, switch_state_down_button_3;
 char switch_state_down_button_4, switch_state_changed; /* effectively boolean */

@@ -2,8 +2,10 @@
 	#include "led.h"
 	#include "stateMachnies.h"
 
-	;; Routines for stateMachnies
-	.text
+	;; extern ints for stateMachnies(RAM)
+	.data
+state_button_1:
+	.word 0
 
 	;; Turns on both led lights by moving 1s into them.
 	.global turn_on
@@ -20,44 +22,45 @@ turn_off:
 ;;; Below is the state machine for toggle_button_1, with the first state
 ;;; 	being in routine 'toggle_button_1'. In simple terms its a binary
 ;;; 	state machine from 0 to 3.
-	
-end:
-	ret
-	
-state_three_button_1:
-	cmp.b #3, &state_button_1
-	JNE toggle_button_1
-	mov.b #1, &red_led_state
-	mov.b #1, &green_led_state
-	mov.b #0, &state_button_1
-	JMP end
-	ret
-	
-state_two_button_1:
-	cmp.b #2, &state_button_1
-	JNE state_three_button_1
-	mov.b #0, &red_led_state
-	mov.b #1, &green_led_state
-	mov.b #3, &state_button_1
-	JMP end
-	ret
-	
-state_one_button_1:
-	cmp.b #1, &state_button_1
-	JNE state_two_button_1
-	mov.b #1, &red_led_state
-	mov.b #2, &state_button_1
-	JMP end
-	ret
 
-	;; First state. 
+out:
+	pop r0
+	
+	.text
+t1:	.word t1_default	; t1[0]
+	.word t1_option1	; t1[1]
+	.word t1_option2	; t1[2]
+	.word t1_option3	; t1[3]
+	
 	.global toggle_button_1
 toggle_button_1:
-	cmp.b #0, &state_button_1
-	JNE state_one_button_1
+	;; range check on selector (state_button_1)
+	cmp #4, &state_button_1 ; state_button_1-4
+	jnc t1_default		; doesn't borrow if s > 3
+
+	;; index into t1
+	mov &state_button_1, r12
+	add r12, r12		; r12=2*state_button_1
+	mov t1(r12), r0 	;jmp jt(state_button_1)
+	
+t1_option1:	
 	mov.b #0, &red_led_state
 	mov.b #0, &green_led_state
-	mov.b #1, state_button_1
-	JMP end
-	ret
-
+	mov #1, &state_button_1
+	JMP out
+	
+t1_option2:
+	mov.b #1, &red_led_state
+	mov #2, &state_button_1
+	JMP out
+	
+t1_option3:
+	mov.b #0, &red_led_state
+	mov.b #1, &green_led_state
+	mov #3, &state_button_1
+	JMP out
+	
+t1_default:
+	mov.b #1, &red_led_state
+	mov 0, &state_button_1
+	JMP out

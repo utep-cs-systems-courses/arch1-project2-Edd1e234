@@ -4,7 +4,6 @@
 #include "buzzer.h"
 
 char state = 0;
-char state_button_1 = 0;  // This will only be changed by the switch interrupt handler.
 char state_button_2 = 0;
 char state_button_3 = 0;
 char state_button_4 = 0;
