@@ -86,7 +86,52 @@ t2_default:
 	mov.b #0, &red_led_state
 	mov #1, &state_button_2
 	jmp out
+
+t3:
+	.word t3_default 	;t3[0]
+	.word t3_option1	;t3[1]
+	.word t3_option2	;t3[2]
+	.word t3_option3	;t3[3]
+	.word t3_option4	;t4[4]
+
+	.global toggle_button_3
+toggle_button_3:
+	cmp #5, &state_button_3
+	jhs t3_default
+
+	mov &state_button_3, r12
+	add r12, r12
+	mov t3(r12), r0
+
+t3_default:
+	mov.b #0, &green_led_state
+	mov.b #0, &red_led_state
+	mov #1, &state_button_3
+	jmp out
+
+t3_option1:
+	mov.b #0, &green_led_state
+	mov.b #0, &red_led_state
+	mov #2, &state_button_3
+	jmp out
 	
+t3_option2:
+	mov.b #0, &green_led_state
+	mov.b #0, &red_led_state
+	mov #3, &state_button_3
+	jmp out
 	
+t3_option3:
+	mov.b #0, &green_led_state
+	mov.b #0, &red_led_state
+	mov #4, &state_button_3
+	jmp out
+
+t3_option4:
+	mov.b #1, &green_led_state
+	mov.b #1, &red_led_state
+	mov #0, &state_button_3
+	jmp out
+
 out:
 	pop r0

@@ -6,7 +6,7 @@
 char state = 0;
 short state_button_1 = 0; 
 short state_button_2 = 0;
-char state_button_3 = 0;
+short state_button_3 = 0;
 char state_button_4 = 0;
 
 // Index for all three arrays. 
@@ -164,41 +164,6 @@ const int periods_inv[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			   14290, 14290, 6068, 4816, // Set 41 Final....
 			   6068, 7216, 6068, 4816
 };
-
-/* Dims LEDs, turns on both led every 4 'blink_counts'.*/
-void toggle_button_3() {
-  switch (state_button_3) {
-  case 0:
-    green_led_state = 0;
-    red_led_state = 0;
-    state_button_3 = 1;
-    break;
-  case 1:
-    green_led_state = 0;
-    red_led_state = 0;
-    state_button_3 = 2;
-    break;
-  case 2:
-    green_led_state = 0;
-    red_led_state = 0;
-    state_button_3 = 3;
-    break;
-  case 3:
-    green_led_state = 0;
-    red_led_state = 0;
-    state_button_3 = 4;
-    break;
-  case 4:
-    green_led_state = 0;
-    red_led_state = 0;
-    state_button_3 = 5;
-    break;
-  case 5:
-    green_led_state = 1;
-    red_led_state = 1;
-    state_button_3 = 0;
-  }
-}
 
 /* This function contains the state machine that transitions the 
    song from note to note.On down beats lights will turn on.*/
