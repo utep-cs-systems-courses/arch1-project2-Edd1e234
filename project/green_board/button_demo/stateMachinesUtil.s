@@ -61,5 +61,32 @@ t1_default:			; first case
 	mov #1, &state_button_1
 	jmp out
 
+	.align 2
+t2:
+	.word t2_default 	;t2[0]
+	.word t2_option1	;t2[1]
+
+	.global
+toggle_button_2:
+	cmp #2, &state_button_2
+	jhs t2_default
+
+	mov &state_button_2, r12
+	add r12, r12
+	mov t2(r12), r0
+
+t2_option:			; this is the second state
+	mov.b #0, &green_led_state
+	mov.b #1, &red_led_state
+	mov #0, &state_button_2
+	jmp out
+	
+t2_default:
+	mov.b #1, &green_led_state
+	mov.b #0, &red_led_state
+	mov #1, &state_button_2
+	jmp out
+	
+	
 out:
 	pop r0

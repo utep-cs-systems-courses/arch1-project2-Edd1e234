@@ -5,7 +5,7 @@
 
 char state = 0;
 short state_button_1 = 0; 
-char state_button_2 = 0;
+short state_button_2 = 0;
 char state_button_3 = 0;
 char state_button_4 = 0;
 
@@ -164,19 +164,6 @@ const int periods_inv[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			   14290, 14290, 6068, 4816, // Set 41 Final....
 			   6068, 7216, 6068, 4816
 };
-
-/* Goes from green to red.*/
-void toggle_button_2() {
-  if (state_button_2) {
-    green_led_state = 1;
-    red_led_state = 0;
-    state_button_2 = 0;
-  } else {
-    red_led_state = 1;
-    green_led_state = 0;
-    state_button_2 = 1;
-  }
-}
 
 /* Dims LEDs, turns on both led every 4 'blink_counts'.*/
 void toggle_button_3() {
