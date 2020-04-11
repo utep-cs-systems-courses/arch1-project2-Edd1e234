@@ -4,6 +4,7 @@
 #include "buzzer.h"
 
 char state = 0;
+short state_button_1 = 0; 
 char state_button_2 = 0;
 char state_button_3 = 0;
 char state_button_4 = 0;

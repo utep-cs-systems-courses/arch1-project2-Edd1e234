@@ -1,7 +1,6 @@
 #ifndef stateMachineUtil_included
 #define stateMachinesUtil_included
 
-static int state_button_1; 
 
 void turn_on(void);
 void turn_off(void);
