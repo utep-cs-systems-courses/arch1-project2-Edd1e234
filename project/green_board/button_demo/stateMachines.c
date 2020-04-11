@@ -7,7 +7,7 @@ char state = 0;
 short state_button_1 = 0; 
 short state_button_2 = 0;
 short state_button_3 = 0;
-char state_button_4 = 0;
+short state_button_4 = 0;
 
 // Index for all three arrays. 
 char value = 0;
@@ -164,27 +164,6 @@ const int periods_inv[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			   14290, 14290, 6068, 4816, // Set 41 Final....
 			   6068, 7216, 6068, 4816
 };
-
-/* This function contains the state machine that transitions the 
-   song from note to note.On down beats lights will turn on.*/
-void toggle_button_4() {
-  if (value==FINAL) {
-    value = 0;
-  }
-  switch(state_button_4){
-  case 0:
-    buzzer_set_period(periods[value]);
-    state_button_4 = 1;
-    turn_off();
-    break;
-  case 1:
-    buzzer_set_period(periods_inv[value]);
-    value++;
-    state_button_4 = 0;
-    turn_on();
-    break;
-    }
-}
 
 /* Just sets values based on current state.*/
 void set_values(char v, char buzzer, char blink) {

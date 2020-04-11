@@ -133,5 +133,51 @@ t3_option4:
 	mov #0, &state_button_3
 	jmp out
 
+;;; this function contains the state machine that transitions
+;;; the song from note to note. On donw beats lights will turn on.
+
+t4:
+	.word t4_default		;t4[0]
+	.word t4_option		;t4[1]
+	
+	.global toggle_button_4
+toggle_button_4:
+	cmp.b &value, &FINAL	;if value == FINAL
+	jeq value_is_FINAL	;if true jumps to value_is_FINAL
+
+	cmp #2, &state_button_4	;state_button_4-2
+	jhs t4_default
+
+	mov &state_button_4, r12
+	add r12, r12		;r12=2*state_button_4
+	mov t4(r12), r0 
+
+	;; movs 0 into value
+value_is_FINAL:
+	mov.b #0, &value
+	ret
+
+t4_default:
+	mov.b &value, r13
+	mov periods(r13), r12
+	call buzzer_set_period
+
+	add.b #1, &value
+	call turn_off
+
+	mov #1, &state_button_4
+	jmp out
+	
+t4_option:
+	mov.b &value, r13
+	mov periods_inv(r13), r12
+	call buzzer_set_period
+
+	add.b #1, &value
+	call turn_off
+
+	mov #0, &state_button_4
+	jmp out
+
 out:
 	pop r0
