@@ -64,9 +64,9 @@ t1_default:			; first case
 	.align 2
 t2:
 	.word t2_default 	;t2[0]
-	.word t2_option1	;t2[1]
+	.word t2_option		;t2[1]
 
-	.global
+	.global toggle_button_2
 toggle_button_2:
 	cmp #2, &state_button_2
 	jhs t2_default
