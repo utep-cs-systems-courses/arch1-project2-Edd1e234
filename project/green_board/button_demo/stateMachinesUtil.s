@@ -32,8 +32,8 @@ t1:
 	.global toggle_button_1
 toggle_button_1:
 	cmp #4, &state_button_1 ; state_button_1-4
-	jhs t1_default
-
+	jc t1_default
+	
 	mov &state_button_1, r12
 	add r12, r12		; r12=2*state_button_1
 	mov t1(r12), r0 	;
@@ -69,7 +69,7 @@ t2:
 	.global toggle_button_2
 toggle_button_2:
 	cmp #2, &state_button_2
-	jhs t2_default
+	jc t2_default
 
 	mov &state_button_2, r12
 	add r12, r12
@@ -97,7 +97,7 @@ t3:
 	.global toggle_button_3
 toggle_button_3:
 	cmp #5, &state_button_3
-	jhs t3_default
+	jc t3_default
 
 	mov &state_button_3, r12
 	add r12, r12
@@ -136,8 +136,10 @@ t3_option4:
 ;;; this function contains the state machine that transitions
 ;;; the song from note to note. On donw beats lights will turn on.
 
+	.align 2
+
 t4:
-	.word t4_default		;t4[0]
+	.word t4_default	;t4[0]
 	.word t4_option		;t4[1]
 	
 	.global toggle_button_4
@@ -146,7 +148,7 @@ toggle_button_4:
 	jeq value_is_FINAL	;if true jumps to value_is_FINAL
 
 	cmp #2, &state_button_4	;state_button_4-2
-	jhs t4_default
+	jc t4_default
 
 	mov &state_button_4, r12
 	add r12, r12		;r12=2*state_button_4
@@ -158,24 +160,25 @@ value_is_FINAL:
 	ret
 
 t4_default:
-	mov.b &value, r13
+	mov.b &value, r13	;value is index.
+	add.b r13, r13		;value is char, must go twice as far.
 	mov periods(r13), r12
-	call buzzer_set_period
+	call #buzzer_set_period
 
-	add.b #1, &value
-	call turn_off
+	call #turn_off
 
 	mov #1, &state_button_4
 	jmp out
 	
 t4_option:
 	mov.b &value, r13
+	add.b r13, r13
 	mov periods_inv(r13), r12
-	call buzzer_set_period
+	call #buzzer_set_period
 
 	add.b #1, &value
-	call turn_off
 
+	call #turn_on
 	mov #0, &state_button_4
 	jmp out
 

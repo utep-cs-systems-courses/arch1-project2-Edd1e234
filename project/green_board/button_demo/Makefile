@@ -26,6 +26,6 @@ led.o: led.c led.h
 
 stateMachines.o: led.h stateMachines.h switches.h stateMachinesUtil.h
 
-stateMachinesUtil.o: stateMachinesUtil.h
+stateMachinesUtil.o: stateMachinesUtil.h buzzer.h
 
 buzzer.c: buzzer.h
