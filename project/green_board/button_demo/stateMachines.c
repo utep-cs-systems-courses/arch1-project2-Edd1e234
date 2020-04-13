@@ -165,26 +165,19 @@ const short periods_inv[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			   6068, 7216, 6068, 4816
 };
 
-/* Just sets values based on current state.*/
-void set_values(char v, char buzzer, char blink) {
-  value = v;
-  buzzer_set_period(0);
-  blink_count_end = blink; 
-}
-
 void state_advance()
 {
   switch (state) {
   case 0:
-    set_values(0, 0, 185);
+    set_values(0, 185);
     toggle_button_1();
     break;
   case 1:
-    set_values(0, 0, 185); 
+    set_values(0, 185); 
     toggle_button_2();
     break;
   case 2:
-    set_values(0, 0, 1);
+    set_values(0, 1);
     toggle_button_3();
     break;
   case 3:
