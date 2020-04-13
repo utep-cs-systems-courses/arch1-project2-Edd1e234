@@ -6,14 +6,12 @@
 	
 	.text
 ;; Turns on both led lights by moving 1s into them.
-	.global turn_on
 turn_on:
 	mov.b #1, &red_led_state
 	mov.b #1, &green_led_state
 	ret
 
 ;; Turns off both led lights by moving 0s into them.
-	.global turn_off
 turn_off:
 	mov.b #0, &red_led_state
 	mov.b #0, &green_led_state
@@ -29,7 +27,6 @@ t1:
 	.word t1_option2		; t1[2]
 	.word t1_option3		; t1[3]
 
-	.global toggle_button_1
 toggle_button_1:
 	cmp #4, &state_button_1 	; state_button_1-4
 	jc t1_default
@@ -64,7 +61,6 @@ t2:
 	.word t2_default 		;t2[0]
 	.word t2_option			;t2[1]
 
-	.global toggle_button_2
 toggle_button_2:
 	cmp #2, &state_button_2		;2-state_button_2
 	jc t2_default			; if state_button_2 == 0
@@ -96,7 +92,6 @@ t3:
 	.word t3_option3		;t3[3]
 	.word t3_option4		;t4[4]
 
-	.global toggle_button_3
 toggle_button_3:
 	cmp #5, &state_button_3		; 5-state_button_3	
 	jc t3_default			; if state_button_3 = 0
@@ -138,7 +133,6 @@ t4:
 	.word t4_default		;t4[0]
 	.word t4_option			;t4[1]
 
-	.global toggle_button_4
 toggle_button_4:
 	cmp.b &value, &FINAL		;if value == FINAL
 	jeq value_is_FINAL		;if true jumps to value_is_FINAL
@@ -178,12 +172,63 @@ t4_option:				;second case.
 	mov #0, &state_button_4		; movs 0 into state_button 
 	jmp out
 
+out:
+	pop r0
+
+
 	.global set_values
 set_values:				; used as a helper function
 	mov.b r12, &value		; sets value
 	mov #0, r12
 	call #buzzer_set_period		; makes sure buzzer is off
-	mov.b r13, &blink_count_end 	; sets blink_count
+	mov.b r13, &blink_count_end	; sets blink_count
+	ret
 
-out:
-	pop r0
+
+st:
+	.word default			; st[0]
+	.word option1			; st[1]
+	.word option2			; st[2]
+	.word option3			; st[3]
+	
+	.global _state_advance
+_state_advance:				; main state machine.
+	cmp #4, &state			; 4 -state
+	jc default
+
+	mov &state, r12
+	add r12, r12
+	mov st(r12), r0			; jumps to next address in table. 
+
+default:				; first case
+	mov.b #0, r12
+	mov.b #185, r13
+	call #set_values		; calls set_values(0, 185)
+	call #toggle_button_1		; toggles button 1
+	jmp final_out
+
+option1:				; case 1
+	mov.b #0, r12		
+	mov.b #185, r13
+	call #set_values		; set_values(0, 185)
+	call #toggle_button_2		; toggles button 2
+	jmp final_out
+
+option2:				; case 2
+	mov.b #0, r12
+	mov.b #1, r13
+	call #set_values		; calls set_values(0, 1) 
+	call #toggle_button_3		; calls button 3
+	jmp final_out
+
+option3:				; case 3
+	call #toggle_button_4		; toggles_button_4
+	mov.b &value, r13
+	add.b r13, r13
+	mov time_set(r13), &blink_count_end ; sets blink_count_end = time_set[value]
+	jmp final_out
+
+final_out:				; this meant for the main state machine. 	
+	mov.b #1, &leds_changed		; movs sets led_changed flag
+	call #led_update_switch
+	ret 				; finishes runing. 

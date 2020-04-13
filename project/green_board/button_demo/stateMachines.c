@@ -13,7 +13,7 @@ short state_button_4 = 0;
 char value = 0;
 
 // Should only be changed in stateMachines.c, used in wdInterruptHandler.c 
-char blink_count_end = 185;
+short blink_count_end = 185;
 
 // When to restart song.
 const char FINAL = 195; 
@@ -167,23 +167,5 @@ const short periods_inv[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 
 void state_advance()
 {
-  switch (state) {
-  case 0:
-    set_values(0, 185);
-    toggle_button_1();
-    break;
-  case 1:
-    set_values(0, 185); 
-    toggle_button_2();
-    break;
-  case 2:
-    set_values(0, 1);
-    toggle_button_3();
-    break;
-  case 3:
-    toggle_button_4();
-    blink_count_end = time_set[value];
-  }
-  leds_changed = 1;
-  led_update_switch();
+  _state_advance();
 }
