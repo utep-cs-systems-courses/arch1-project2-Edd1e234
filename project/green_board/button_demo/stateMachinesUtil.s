@@ -1,6 +1,4 @@
 .arch msp430g2553
-;; #include "led.h"
-;; #include "stateMachnies.h"
 	;; extern ints for stateMachnies(RAM)
 	;; This is just is a state
 	
